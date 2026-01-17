@@ -9,7 +9,7 @@ export class AuthService {
 
   private http=inject(HttpClient);
   private router=inject(Router);
-  private baseUrl='http://localhost:5000';
+  private baseUrl='https://css-dealership.onrender.com';
 
   login(cred:any){
     return this.http.post(`${this.baseUrl}/api/login`,cred);

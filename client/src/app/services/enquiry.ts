@@ -7,7 +7,7 @@ import { Enquiry } from '../models/enquiry';
 })
 export class EnquiryService {
   private http=inject(HttpClient);
-  private baseUrl='http://localhost:5000/api';
+  private baseUrl='https://css-dealership.onrender.com/api';
 
   private getHeaders(){
     const tk=localStorage.getItem('token');

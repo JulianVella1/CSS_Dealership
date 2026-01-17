@@ -1,0 +1,14 @@
+.hero-section {
+  background-image: url('../../assets/skyline_back_about.jpg') !important;
+  background-size: cover !important;
+  background-position: center !important;
+  background-attachment: fixed !important;
+  min-height: 700px;
+  position: relative;
+}
+
+.cards-overlay {
+  position: relative;
+  z-index: 20;
+  margin-top: -150px;
+}

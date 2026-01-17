@@ -1,0 +1,7 @@
+.jumbotron {
+  background-image: url('../../assets/skyline_front_hp.jpg') !important;
+  background-size: cover !important;
+  background-position: center !important;
+  background-attachment: fixed !important;
+  min-height: 600px;
+}

@@ -1,0 +1,78 @@
+@if (car) {
+  <div class="container mt-5">
+    <div class="row">
+      <div class="col-md-6">
+        <img [src]="car.image || 'https://placehold.co/600x400'" class="img-fluid rounded" alt="Car">
+      </div>
+
+      <div class="col-md-6">
+        <h2>{{ car.make }} {{ car.model }}</h2>
+        <h4 class="text-success">€{{ car.price }}</h4>
+        <hr>
+        <p><strong>Year:</strong> {{ car.year }}</p>
+        <p><strong>Mileage:</strong> {{ car.mileage ? (car.mileage | number) + ' km' : 'N/A' }}</p>
+        <p><strong>Condition:</strong> {{ car.condition || 'Used' }}</p>
+        <p><strong>Description:</strong> {{ car.description }}</p>
+      </div>
+    </div>
+
+    <hr class="my-5">
+
+    <div class="row justify-content-center mb-5">
+      <div class="col-md-8">
+        <div class="card p-4 shadow-sm">
+
+          @if (car.status === 'Sold') {
+            <div class="text-center p-4">
+              <h2 class="text-danger fw-bold">SOLD</h2>
+              <p class="lead">This vehicle has been sold and is no longer available.</p>
+              <button routerLink="/gallery" class="btn btn-outline-dark mt-2">Back to Gallery</button>
+            </div>
+          }
+
+          @if (car.status === 'Available') {
+            <h4>Interested? Send us a message.</h4>
+
+            @if (successMsg) {
+              <div class="alert alert-success">
+                {{ successMsg }}
+              </div>
+            }
+
+            <form [formGroup]="enquiryForm" (ngSubmit)="onSubmit()">
+              <div class="mb-3">
+                <label>Name</label>
+                <input type="text" class="form-control" [class.is-invalid]="enquiryForm.get('guestName')?.invalid && enquiryForm.get('guestName')?.touched" formControlName="guestName">
+                @if (enquiryForm.get('guestName')?.hasError('required') && enquiryForm.get('guestName')?.touched) {
+                  <div class="invalid-feedback d-block">Name is required</div>
+                }
+              </div>
+
+              <div class="mb-3">
+                <label>Email</label>
+                <input type="email" class="form-control" [class.is-invalid]="enquiryForm.get('guestEmail')?.invalid && enquiryForm.get('guestEmail')?.touched" formControlName="guestEmail">
+                @if (enquiryForm.get('guestEmail')?.hasError('required') && enquiryForm.get('guestEmail')?.touched) {
+                  <div class="invalid-feedback d-block">Email is required</div>
+                }
+                @if (enquiryForm.get('guestEmail')?.hasError('email') && enquiryForm.get('guestEmail')?.touched) {
+                  <div class="invalid-feedback d-block">Please enter a valid email address</div>
+                }
+              </div>
+
+              <div class="mb-3">
+                <label>Message</label>
+                <textarea class="form-control" [class.is-invalid]="enquiryForm.get('message')?.invalid && enquiryForm.get('message')?.touched" rows="3" formControlName="message"></textarea>
+                @if (enquiryForm.get('message')?.hasError('required') && enquiryForm.get('message')?.touched) {
+                  <div class="invalid-feedback d-block">Message is required</div>
+                }
+              </div>
+
+              <button type="submit" class="btn btn-primary w-100" [disabled]="!enquiryForm.valid">Enquiry Now</button>
+            </form>
+          }
+
+        </div>
+      </div>
+    </div>
+  </div>
+}

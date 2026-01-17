@@ -1,0 +1,68 @@
+<div class="container mt-4">
+  <h2>Customer Enquiries</h2>
+
+  <table class="table table-bordered mt-3">
+    <thead class="table-dark">
+      <tr>
+        <th>Car</th>
+        <th>Customer</th>
+        <th>Message</th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (enq of enqs; track enq._id) {
+        <tr>
+          <td>
+            @if (enq.carId && enq.carId['make']) {
+              {{ enq.carId['make'] }} {{ enq.carId['model'] }}
+            } @else {
+              Unknown Car
+            }
+          </td>
+          <td>
+            {{ enq.guestName }}<br>
+            <small class="text-muted">{{ enq.guestEmail }}</small>
+          </td>
+          <td>
+            {{ enq.message }}
+            @if (enq.adminReply) {
+              <div class="alert alert-info mt-2 p-1">
+                <small><strong>Reply:</strong> {{ enq.adminReply }}</small>
+              </div>
+            }
+          </td>
+          <td>
+            <span [class.badge]="true"
+                  [class.bg-danger]="enq.status === 'New'"
+                  [class.bg-success]="enq.status === 'Replied'">
+              {{ enq.status }}
+            </span>
+          </td>
+          <td>
+            @if (enq.status === 'New') {
+              <button class="btn btn-sm btn-primary"
+                      (click)="openReply(enq._id)">
+                Reply
+              </button>
+            }
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+
+  @if (activeEnqId) {
+    <div class="card p-3 mt-3 fixed-bottom bg-light border-top shadow">
+      <div class="container">
+        <h5>Reply to Customer</h5>
+        <div class="input-group">
+          <input type="text" class="form-control" [(ngModel)]="replyMsg" placeholder="Type your reply here...">
+          <button class="btn btn-success" (click)="sendReply()">Send</button>
+          <button class="btn btn-secondary" (click)="activeEnqId = null">Cancel</button>
+        </div>
+      </div>
+    </div>
+  }
+</div>

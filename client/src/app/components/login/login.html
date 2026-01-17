@@ -1,0 +1,23 @@
+@if (errorMsg) {
+  <div class="alert alert-danger" role="alert">
+    {{errorMsg}}
+  </div>
+}
+
+<form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+  <div class="form-group mb-3">
+    <label for="username">Username</label>
+    <input type="text" class="form-control" [class.is-invalid]="loginForm.get('username')?.invalid && loginForm.get('username')?.touched" id="username" placeholder="Enter username" formControlName="username">
+    @if (loginForm.get('username')?.hasError('required') && loginForm.get('username')?.touched) {
+      <div class="invalid-feedback d-block">Username is required</div>
+    }
+  </div>
+  <div class="form-group mb-3">
+    <label for="password">Password</label>
+    <input type="password" class="form-control" [class.is-invalid]="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" id="password" placeholder="Password" formControlName="password">
+    @if (loginForm.get('password')?.hasError('required') && loginForm.get('password')?.touched) {
+      <div class="invalid-feedback d-block">Password is required</div>
+    }
+  </div>
+  <button type="submit" class="btn btn-warning w-100" [disabled]="!loginForm.valid">Login</button>
+</form>
